@@ -14,3 +14,4 @@ plt.xlabel('Année')
 plt.ylabel('Température Moyenne (°C)')
 plt.grid(True)
 plt.show()
+
