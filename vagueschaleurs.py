@@ -46,7 +46,7 @@ def detecter_vagues_chaleur(temperatures, seuil, duree_min):
 
 # Exemple d'utilisation
 temperatures = df_dkr_temps['CCDBT_2020'].resample('D').max()  # Données d'exemple
-seuil = 35  # Température seuil
+seuil = 30  # Température seuil
 duree_min = 3  # Durée minimale d'une vague de chaleur
 
 resultats = detecter_vagues_chaleur(temperatures, seuil, duree_min)
