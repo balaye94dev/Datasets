@@ -41,5 +41,5 @@ mois = ["Jan", "Fev", "Mars", "Avr", "Mai", "Juin", "Juil", "Aout", "Sept", "Oct
 plt.plot(mois, dkr_daily_max_temps, color = "Blue", linewidth = 1.5)
 plt.plot(mois, dkr_daily_max_temps_2050, color = "Green", linewidth = 1.5, linestyle = "dotted")
 plt.plot(mois, dkr_daily_max_temps_2080, color = "Red", linewidth = 1.5, linestyle = "dotted")
-
-plt.legend()
+plt.grid(visible = True, linestyle = '-.', linewidth = 1)
+plt.axis(xlim = ("jan", "dec") , ylim = (0,50))
