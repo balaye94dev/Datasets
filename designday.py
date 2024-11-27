@@ -1,17 +1,20 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Nov 26 17:45:15 2024
-
-@author: Dell
-"""
-
 import pandas as pd
+import numpy as np
 
-# Charger les fichiers excel
-df_dkr_temps = pd.read_excel('DAKAR_MORPHED.xlsx', sheet_name='DBT')
-df_dkr_temps['datetime'] = pd.to_datetime(df_dkr_temps['datetime'])
-df_dkr_temps.set_index('datetime', inplace=True)
+# Charger les données
+df = pd.read_excel("DAKAR_MORPHED.xlsx", sheet_name='DBT')  # Assurez-vous que le fichier contient des colonnes : 'datetime' et 'temperature'
+df['datetime'] = pd.to_datetime(df['datetime'])
+df['hour'] = df['datetime'].dt.hour
 
-dkr_design_day = df_dkr_temps['CCDBT_2020'].resample('D')
+# Calculer les moyennes horaires
+hourly_means = df.groupby('hour')['CCDBT_2020'].mean()
 
-print(dkr_design_day)
+# Trouver le jour le plus proche du profil moyen
+df['date'] = df['datetime'].dt.date
+daily_profiles = df.groupby(['date', 'hour'])['CCDBT_2020'].mean().unstack()
+distances = daily_profiles.apply(lambda x: np.linalg.norm(x - hourly_means), axis=1)
+closest_day = distances.idxmin()
+
+# Résultats
+print(f"Jour type identifié : {closest_day}")
+print("Profil moyen horaire :", hourly_means)
