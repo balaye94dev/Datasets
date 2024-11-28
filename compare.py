@@ -9,9 +9,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Importer les fichiers excel sous forme de Dataframe
-df_mtm_temps =pd.read_excel('MATAM_MORPHED.xlsx', sheet_name='Temps')
+df_mtm_temps =pd.read_excel('MATAM_MORPHED.xlsx', sheet_name='DBT')
 df_dkr_temps =pd.read_excel('DAKAR_MORPHED.xlsx', sheet_name='DBT')
-df_zig_temps =pd.read_excel('ZIGUINCHOR_MORPHED.xlsx', sheet_name='Temps')
+df_zig_temps =pd.read_excel('ZIGUINCHOR_MORPHED.xlsx', sheet_name='DBT')
 
 # Définir la colonne datetime comme index
 df_mtm_temps['datetime'] = pd.to_datetime(df_mtm_temps['datetime'])
@@ -39,7 +39,4 @@ zig_daily_max_temps_2080 = df_zig_temps['CCDBT_2080'].resample('ME').max()
 mois = ["Jan", "Fev", "Mars", "Avr", "Mai", "Juin", "Juil", "Aout", "Sept", "Oct", "Nov", "Dec"]
 
 plt.plot(mois, dkr_daily_max_temps, color = "Blue", linewidth = 1.5)
-plt.plot(mois, dkr_daily_max_temps_2050, color = "Green", linewidth = 1.5, linestyle = "dotted")
-plt.plot(mois, dkr_daily_max_temps_2080, color = "Red", linewidth = 1.5, linestyle = "dotted")
-plt.grid(visible = True, linestyle = '-.', linewidth = 1)
-plt.axis(xlim = ("jan", "dec") , ylim = (0,50))
+
