@@ -38,5 +38,5 @@ zig_daily_max_temps_2080 = df_zig_temps['CCDBT_2080'].resample('ME').max()
 
 mois = ["Jan", "Fev", "Mars", "Avr", "Mai", "Juin", "Juil", "Aout", "Sept", "Oct", "Nov", "Dec"]
 
-plt.plot(mois, dkr_daily_max_temps, color = "Blue", linewidth = 1.5)
+
 
