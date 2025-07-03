@@ -4,9 +4,6 @@ import pandas as pd
 file_path = 'CLIM_ZIGUINCHOR(2009-2023).xlsx'
 df = pd.read_excel(file_path)
 
-# Assurez-vous que votre fichier Excel a une colonne 'datetime' pour les dates et heures
-# et une colonne 'temperature' pour les températures horaires.
-
 # Convertir la colonne 'datetime' en type datetime
 df['datetime'] = pd.to_datetime(df['datetime'])
 
