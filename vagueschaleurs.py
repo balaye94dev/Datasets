@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 24 20:03:28 2024
-
-@author: Dell
-"""
-
 import pandas as pd
 
 # Charger les fichiers excel
