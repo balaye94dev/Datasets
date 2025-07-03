@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Lire le fichier Excel
 file_path = 'CLIM_ZIGUINCHOR(2009-2023).xlsx'
@@ -19,3 +20,4 @@ print(daily_max_temps)
 # Sauvegarder les résultats dans un nouveau fichier Excel
 output_file_path = 'Max_Daily_Temps_Ziguinchor.xlsx'
 daily_max_temps.to_excel(output_file_path, sheet_name='Max_Temperatures')
+ plt.plot('datetime','TEMP')
