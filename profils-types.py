@@ -23,11 +23,6 @@ hiver_mois = [12, 1, 2]
 # Fonction pour extraire une semaine type par saison
 def semaine_type(df, mois_saison, saison):
     df_saison = df[df['month'].isin(mois_saison)]
-
-
-# Fonction pour extraire une semaine type par saison
-def semaine_type(df, mois_saison, saison):
-    df_saison = df[df['month'].isin(mois_saison)]
     
     # Garder uniquement les semaines complètes (7 jours x 24 heures)
     semaines_valides = []
@@ -51,23 +46,28 @@ def semaine_type(df, mois_saison, saison):
     
     return semaine_type
 
-
 # Obtenir les profils de la semaine type d'été et d'hiver
 profil_ete = semaine_type(df, ete_mois, "été")
 profil_hiver = semaine_type(df, hiver_mois, "hiver")
 
-# Préparer les heures pour l'axe des X
-heures = [f"Jour {i//24+1} - {i%24}h" for i in range(7*24)]
 
-# Tracer les deux profils
-plt.figure(figsize=(14, 6))
+# Axe horaire de 0 à 167 heures
+heures = np.arange(168)
+
+# Points pour chaque jour (0h, 24h, 48h, ..., 144h)
+xticks = np.arange(0, 168, 24)
+xtick_labels = [f"Jour {i+1}" for i in range(len(xticks))]
+
+
+# Tracé
+plt.figure(figsize=(12, 6))
 plt.plot(heures, profil_ete, label="Semaine type - Été", color="orange")
 plt.plot(heures, profil_hiver, label="Semaine type - Hiver", color="blue")
-plt.xticks(ticks=range(0, 168, 6), rotation=45)
-plt.xlabel("Heure (semaine)")
+plt.xticks(ticks=xticks, labels=xtick_labels)
+plt.xlabel("Jour de la semaine")
 plt.ylabel("Température (°C)")
-plt.title("Profils de température horaires - Semaine type Été vs Hiver")
+plt.title("Profils de température horaire – Semaine type Été vs Hiver")
+plt.grid(True)
 plt.legend()
 plt.tight_layout()
-plt.grid(True)
 plt.show()
