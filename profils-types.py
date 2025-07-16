@@ -17,8 +17,8 @@ df['year'] = df['datetime'].dt.year
 
 
 # Définir les mois d'été (juin-juillet-août) et d'hiver (décembre-janvier-février)
-ete_mois = [6, 7, 8]
-hiver_mois = [12, 1, 2]
+ete_mois = [6, 7, 8, 9, 10]
+hiver_mois = [12, 1, 2, 3, 4, 5]
 
 # Fonction pour extraire une semaine type par saison
 def semaine_type(df, mois_saison, saison):
@@ -67,7 +67,7 @@ plt.xticks(ticks=xticks, labels=xtick_labels)
 plt.xlabel("Jour de la semaine")
 plt.ylabel("Température (°C)")
 plt.title("Profils de température horaire – Semaine type Été vs Hiver")
-plt.grid(True)
+plt.grid(False)
 plt.legend()
 plt.tight_layout()
 plt.show()
