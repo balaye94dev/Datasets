@@ -2,25 +2,38 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.style.use('seaborn-v0_8-whitegrid')  # Base sobre et professionnelle
+plt.rcParams.update({
+    'font.size': 12,
+    'font.family': 'consolas',
+    'axes.titlesize': 14,
+    'axes.labelsize': 12,
+    'legend.fontsize': 10,
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'figure.dpi': 300,
+    'lines.linewidth': 1.5,
+})
+
 # Charger les données
 df = pd.read_excel("Dkr_Datas.xlsx", parse_dates=['datetime'])
 
-# Ajouter les colonnes utiles
+# Colonnes utiles
 df['date'] = df['datetime'].dt.date
 df['hour'] = df['datetime'].dt.hour
 df['month'] = df['datetime'].dt.month
 df['week'] = df['datetime'].dt.isocalendar().week
 df['year'] = df['datetime'].dt.year
 
-# Mois d'été et d'hiver
+# Mois été / hiver
 ete_mois = [6, 7, 8]
 hiver_mois = [12, 1, 2]
 
-# Lissage simple
+# Lissage
 def lisser_profil(profil, window=5):
     return np.convolve(profil, np.ones(window)/window, mode='same')
 
-# Fonction générique pour extraire une semaine type à partir d'une colonne
+# Extraction générique
 def semaine_type(df, mois_saison, colonne_temp):
     df_saison = df[df['month'].isin(mois_saison)]
     semaines_valides = []
@@ -33,7 +46,7 @@ def semaine_type(df, mois_saison, colonne_temp):
     idx_min = np.argmin(distances)
     return profils[idx_min]
 
-# Extraire les profils et lisser
+# Extraction + lissage
 def get_profils_lisses(df, saison_mois):
     return {
         "Actuel": lisser_profil(semaine_type(df, saison_mois, "temperature")),
@@ -44,30 +57,31 @@ def get_profils_lisses(df, saison_mois):
 profils_ete = get_profils_lisses(df, ete_mois)
 profils_hiver = get_profils_lisses(df, hiver_mois)
 
-# Axe x et ticks journaliers
+# Axes
 heures = np.arange(168)
 xticks = np.arange(0, 168, 24)
-xtick_labels = [f"Jour {i+1}" for i in range(len(xticks))]
+xtick_labels = [f"Jour {i+1}" for i in range(7)]
 
-# 🎨 Tracé
-plt.figure(figsize=(7, 5))
+# 📈 Tracé
+fig, ax = plt.subplots(figsize=(6.5, 4.5))  # Dimensions compactes et publication-ready
 
 # Été
-#plt.plot(heures, profils_ete["Actuel"], label="Été - Actuel", color="orange")
-#plt.plot(heures, profils_ete["2050"], label="Été - 2050", color="darkorange", linestyle="--")
-#plt.plot(heures, profils_ete["2100"], label="Été - 2100", color="red")
+#ax.plot(heures, profils_ete["Actuel"], label="Été - Actuel", color="darkorange")
+#ax.plot(heures, profils_ete["2050"], label="Été - 2050", color="orangered", linestyle="--")
+#ax.plot(heures, profils_ete["2100"], label="Été - 2100", color="firebrick", linestyle=":")
 
 # Hiver
-plt.plot(heures, profils_hiver["Actuel"], label="Hiver - Actuel", color="blue")
-plt.plot(heures, profils_hiver["2050"], label="Hiver - 2050", color="dodgerblue", linestyle="--")
-plt.plot(heures, profils_hiver["2100"], label="Hiver - 2100", color="navy")
+ax.plot(heures, profils_hiver["Actuel"], label="Hiver - Actuel", color="royalblue")
+ax.plot(heures, profils_hiver["2050"], label="Hiver - 2050", color="deepskyblue", linestyle="--")
+ax.plot(heures, profils_hiver["2100"], label="Hiver - 2100", color="navy", linestyle=":")
 
-# Personnalisation
-plt.xticks(ticks=xticks, labels=xtick_labels)
-plt.xlabel("Jour de la semaine")
-plt.ylabel("Température de la semaine type (°C)")
-plt.title("Comparaison des profils horaires - Hiver (Actuel, 2050, 2100)")
-plt.grid(False)
-plt.legend()
+# Axe x
+ax.set_xticks(xticks)
+ax.set_xticklabels(xtick_labels)
+ax.set_xlabel("Jour de la semaine")
+ax.set_ylabel("Température (°C)")
+ax.set_title("Évolution des profils de température horaire en Hiver \n(Actuel, 2050, 2100) ")
+ax.legend(loc='upper center', ncol=3, frameon=False)
+ax.grid(True, linestyle=':', linewidth=0.5, alpha=0.7)
 plt.tight_layout()
 plt.show()
