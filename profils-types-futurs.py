@@ -11,7 +11,7 @@ plt.rcParams.update({
     'legend.fontsize': 10,
     'xtick.labelsize': 10,
     'ytick.labelsize': 10,
-    'figure.dpi': 300,
+    'figure.dpi': 100,
     'lines.linewidth': 1.5,
 })
 
@@ -66,21 +66,21 @@ xtick_labels = [f"Jour {i+1}" for i in range(7)]
 fig, ax = plt.subplots(figsize=(6.5, 4.5))  # Dimensions compactes et publication-ready
 
 # Été
-#ax.plot(heures, profils_ete["Actuel"], label="Été - Actuel", color="darkorange")
-#ax.plot(heures, profils_ete["2050"], label="Été - 2050", color="orangered", linestyle="--")
-#ax.plot(heures, profils_ete["2100"], label="Été - 2100", color="firebrick", linestyle=":")
+ax.plot(heures, profils_ete["Actuel"], label="Actuel", color="darkorange")
+ax.plot(heures, profils_ete["2050"], label="2050", color="orangered", linestyle="--")
+ax.plot(heures, profils_ete["2100"], label="2100", color="firebrick", linestyle=":")
 
 # Hiver
-ax.plot(heures, profils_hiver["Actuel"], label="Hiver - Actuel", color="royalblue")
-ax.plot(heures, profils_hiver["2050"], label="Hiver - 2050", color="deepskyblue", linestyle="--")
-ax.plot(heures, profils_hiver["2100"], label="Hiver - 2100", color="navy", linestyle=":")
+#ax.plot(heures, profils_hiver["Actuel"], label="Hiver - Actuel", color="royalblue")
+#ax.plot(heures, profils_hiver["2050"], label="Hiver - 2050", color="deepskyblue", linestyle="--")
+#ax.plot(heures, profils_hiver["2100"], label="Hiver - 2100", color="navy", linestyle=":")
 
 # Axe x
 ax.set_xticks(xticks)
 ax.set_xticklabels(xtick_labels)
-ax.set_xlabel("Jour de la semaine")
+ax.set_xlabel("Jour d'une semaine type")
 ax.set_ylabel("Température (°C)")
-ax.set_title("Évolution des profils de température horaire en Hiver \n(Actuel, 2050, 2100) ")
+ax.set_title("Évolution des profils de température horaire de Dakar en Eté \n(Actuel, 2050, 2100) ")
 ax.legend(loc='upper center', ncol=3, frameon=False)
 ax.grid(True, linestyle=':', linewidth=0.5, alpha=0.7)
 plt.tight_layout()
